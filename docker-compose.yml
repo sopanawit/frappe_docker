@@ -3,7 +3,7 @@ services:
   mariadb:
     image: "mariadb:10.2"
     environment:
-      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_ROOT_PASSWORD=1q2w3e4r
       - MYSQL_USER=root
     volumes:
       - ./conf/mariadb-conf.d:/etc/mysql/conf.d
