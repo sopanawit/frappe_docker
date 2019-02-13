@@ -17,10 +17,9 @@ cd /home/frappe/ && chown -R frappe:frappe ./*
 ### 4. Initial Frappe App
 ```
 docker exec -it frappe bash
-cd /home/frappe/ && bench init frappe-bench
-sudo apt update
-sudo pip install -e bench-repo
-sudo npm install -g yarn
+cd /home/frappe/ && bench init frappe-bench --ignore-exist --skip-redis-config-generation && cd frappe-bench
+mv Procfile_docker Procfile && mv sites/common_site_config_docker.json sites/common_site_config.json
+bench set-mariadb-host mariadb
 ```
  
 ### 5. Config permission
@@ -36,17 +35,13 @@ chmod -R 0444 ./conf.d/*
 ```
 docker-compose restart
 ```
-
-### 7. Copy default configuration for Frappe app
-```
-docker exec -it frappe bash
-mv Procfile_docker Procfile && mv sites/common_site_config_docker.json sites/common_site_config.json && bench set-mariadb-host mariadb
-cp Procfile ../frappe-bench/
-cp sites/common_site_config.json ../frappe-bench/sites/
-cd /home/frappe/ && sudo chmod -R 777 frappe-bench
-```
  
-### 8. Create a new site
+### 8. Copy 
+```
+bench set-mariadb-host mariadb
+```
+
+### 7. Create a new site
 ```
 docker exec -it frappe bash
 cd /home/frappe/frappe-bench
