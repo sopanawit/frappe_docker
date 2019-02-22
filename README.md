@@ -15,9 +15,10 @@ sudo su
 passwd frappe
 ```
  
-### 3. initial frappe-bench
+### 3. initial frappe-bench and install Time Table Management App
 ```
-./init.sh
+docker exec -it frappe bash
+./init.sh <url_bitbucket_repo>
 ```
 
 ### 4. Start bench
