@@ -44,7 +44,7 @@ bench start
 ```
 Bench will listen requests on port 8000. To access a site via web browser, find your IP address using `docker inspect frappe` and look for IPv4 then press your IP into web browser <ip_address:8000> 
 
-# Develop frappe application/modules in develop branch (remote origin)
+## Develop frappe application/modules in develop branch (remote origin)
 After get-app, you will always get a remote upstream which is for production environment. This is the way to change to remote origin.
 ```
 frappe:~/frappe-bench$ cd apps/<app_name>
@@ -55,7 +55,7 @@ frappe:~/frappe-bench/apps/<app_name>$ git checkout origin <branch_name>
 ```
 To prevent database migration error, don't forget to remove *.pyc before execute `bench migrate`
 
-# Development using Remote Workspace
+## Development using Remote Workspace
 This branch provide frappe-bench.code-workspace for develop source code using remote protocol with `Visual Studio Code`.
 
 ## Prerequsite
