@@ -14,6 +14,27 @@ C:\Users\<user>\<path>> git clone --branch windows https://github.com/sopanawit/
 C:\Users\<user>\<path>> cd .\frappe_docker\
 C:\Users\<user>\<path>\frappe_docker> docker-compose up -d
 ```
+For __Docker Toolbox__ users, there's a little bit more things to do
+```
+C:\Users\<user>\<path>> docker exec -it mariadb bash
+root:/# apt-get -y update && apt-get -y install vim
+root:/# cd /etc/mysql
+root:/etc/mysql# vim my.cnf
+```
+Add following configurations into __[mysqld]__ and __[mysql]__ sections
+```
+[mysqld]
+innodb-file-format=barracuda
+innodb-file-per-table=1
+innodb-large-prefix=1
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+[mysql]
+default-character-set = utf8mb4
+```
+Then, __exit__ and execute `docker-compose restart`
 
 ### 2. Initial frappe site and setup config using init.sh
 init.sh is a bash script that will help you to create site as frappe.local and setup frappe configuration to use docker environment. If you have other application that you want to install for development, provide repository url and application name along with init.sh (optional)
@@ -30,10 +51,9 @@ frappe:~/frappe-bench/apps/frappe$ git checkout -b <new_branch_name> <commit-id>
 Then, new frappe version have to compile before bench start, delete *.pyc in apps/ to prevent an eror while migrating database schemas.
 ```
 frappe:~/frappe-bench/apps/frappe$ cd ../../
-frappe:~/frappe-bench$ bench build
 frappe:~/frappe-bench$ find . -name *.pyc -delete
-frappe:~/frappe-bench$ bench migrate
-Success: Done in 0.192s
+frappe:~/frappe-bench$ bench build && bench migrate
+Success: Done in 0.xxxs
 Updating DocTypes for frappe        : [========================================]
 Syncing help database...
 ```
