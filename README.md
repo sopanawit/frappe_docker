@@ -51,7 +51,7 @@ frappe:~/frappe-bench$ cd apps/<app_name>
 frappe:~/frappe-bench/apps/<app_name>$ git remote remove upstream
 frappe:~/frappe-bench/apps/<app_name>$ git remote add origin <repository_url>
 frappe:~/frappe-bench/apps/<app_name>$ git fetch origin <branch_name> && git pull
-frappe:~/frappe-bench/apps/<app_name>$ git checkout origin <branch_name>
+frappe:~/frappe-bench/apps/<app_name>$ git checkout <branch_name>
 ```
 To prevent database migration error, don't forget to remove *.pyc before execute `bench migrate`
 
