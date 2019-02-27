@@ -6,6 +6,8 @@ ask_backup() {
     read -p "Delete old backup [y/n]:" decision
 }
 
+cd ../
+
 echo "Backup frappe-bench."
 if [[ -d "frappe-bench-backup" ]]; then
     echo "Backup folder is already exists!"
@@ -23,7 +25,7 @@ else
 fi
 
 echo "Init frappe directory..."
-cd ../ && bench init frappe-bench --ignore-exist --skip-redis-config-generation
+bench init frappe-bench --ignore-exist --skip-redis-config-generation
 cd frappe-bench
 
 echo "Seting up configurations to Docker environment..."
