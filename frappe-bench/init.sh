@@ -35,10 +35,4 @@ bench set-mariadb-host mariadb
 echo "Create new site frappe.local"
 bench new-site frappe.local
 
-if [[ $1 != '' ]] && [[ $2 != '' ]]; then
-    echo "Installing app $2 from $1"
-    bench get-app $1
-    bench --site frappe.local install-app $2
-fi
-
 echo "You are all set, try >> bench start"
