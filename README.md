@@ -5,7 +5,7 @@ This branch is for developer who want to develop Frappe framework on Windows env
 Volume mapping is not working for Frappe because bench must run on non-root user and volume mapping on Windows can not be assigned to a non-root user. (always root with 0777 permission)
 
 ## Prerequsite
-Docker Desktop (recommanded) or Docker Toolbox
+Docker Desktop (recommended) or Docker Toolbox
 
 ## Installation
 ### 1. Clone frappe_docker into your local drive & build container via docker-compose
@@ -36,29 +36,19 @@ default-character-set = utf8mb4
 ```
 Then, __exit__ and execute `docker-compose restart`
 
-### 2. Initial frappe site and setup config using init.sh
-init.sh is a bash script that will help you to create site as frappe.local and setup frappe configuration to use docker environment. If you have other application that you want to install for development, provide repository url and application name along with init.sh (optional)
+### 2. Initial frappe site and setup system config
+Use bench command to initial application and website directory for Frappe framework.
+Use option `--frappe-path` and `--frappe-branch` aling with `bench init` to specific repository and branch. (optional)
 ```
 C:\Users\<user>\<path>\frappe_docker> docker exec -it frappe bash
-frappe:~/frappe-bench$ ./init.sh <repository_url> <app_name>
+frappe:~/frappe-bench$ cd ../
+frappe:~$ bench init frappe-bench --ignore-exist --skip-redis-config-generation --frappe-path=<repository_url> --frappe-branch=<branch_name>
+frappe:~$ cd frappe-bench
+frappe:~/frappe-bench$ mv Procfile_docker Procfile && mv sites/common_site_config_docker.json sites/common_site_config.json
+bench set-mariadb-host mariadb
 ```
 
-### 3. (Optional) In case of you are want to use previous version of frappe, you can change its version with instruction below. Anyway, you need to prepare a commit Id of frappe version that you need like `ef7cb64fb`.
-```
-frappe:~/frappe-bench$ cd apps/frappe
-frappe:~/frappe-bench/apps/frappe$ git checkout -b <new_branch_name> <commit-id>
-```
-Then, new frappe version have to compile before bench start, delete *.pyc in apps/ to prevent an eror while migrating database schemas.
-```
-frappe:~/frappe-bench/apps/frappe$ cd ../../
-frappe:~/frappe-bench$ find . -name *.pyc -delete
-frappe:~/frappe-bench$ bench build && bench migrate
-Success: Done in 0.xxxs
-Updating DocTypes for frappe        : [========================================]
-Syncing help database...
-```
-
-### 4. Everything all set, let start bench
+### 3. Everything all set, let start bench
 ```
 bench start
 ```
@@ -68,12 +58,14 @@ Bench will listen requests on port 8000. To access a site via web browser, find 
 After get-app, you will always get a remote upstream which is for production environment. This is the way to change to remote origin.
 ```
 frappe:~/frappe-bench$ cd apps/<app_name>
+frappe:~/frappe-bench/apps/<app_name>$ git remote -v
 frappe:~/frappe-bench/apps/<app_name>$ git remote remove upstream
 frappe:~/frappe-bench/apps/<app_name>$ git remote add origin <repository_url>
+frappe:~/frappe-bench/apps/<app_name>$ git remote -v
 frappe:~/frappe-bench/apps/<app_name>$ git fetch origin <branch_name> && git pull
 frappe:~/frappe-bench/apps/<app_name>$ git checkout <branch_name>
+frappe:~/frappe-bench/apps/<app_name>$ git status
 ```
-To prevent database migration error, don't forget to remove *.pyc before execute `bench migrate`
 
 ## Development using Remote Workspace
 This branch provide frappe-bench.code-workspace for develop source code using remote protocol with `Visual Studio Code`.
