@@ -37,8 +37,7 @@ default-character-set = utf8mb4
 Then, __exit__ and execute `docker-compose restart`
 
 ### 2. Initial frappe site and setup system config
-Use bench command to initial application and website directory for Frappe framework.
-Use option `--frappe-path` and `--frappe-branch` aling with `bench init` to specific repository and branch. (optional)
+Use bench command to initial application and website directory for Frappe framework. Use option `--frappe-path` and `--frappe-branch` along with `bench init` to specific repository and branch. (optional)
 ```
 C:\Users\<user>\<path>\frappe_docker> docker exec -it frappe bash
 frappe:~/frappe-bench$ cd ../
