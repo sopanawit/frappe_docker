@@ -9,10 +9,14 @@ RUN apt-get -y update
 RUN apt-get install -y iputils-ping git build-essential python-setuptools python-dev libffi-dev libssl-dev libjpeg8-dev \
   redis-tools redis-server software-properties-common libxrender1 libxext6 xfonts-75dpi xfonts-base zlib1g-dev libfreetype6-dev \
   liblcms2-dev libwebp-dev python-tk apt-transport-https libsasl2-dev libldap2-dev libtiff5-dev tcl8.6-dev tk8.6-dev \
-  wget libmysqlclient-dev mariadb-client mariadb-common curl rlwrap redis-tools nano wkhtmltopdf python-pip vim sudo ssh
+  wget libmysqlclient-dev mariadb-client mariadb-common curl rlwrap redis-tools nano python-pip vim sudo ssh
 
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+RUN tar vxf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+RUN cp wkhtmltox/bin/wk* /usr/local/bin/
 
 RUN service ssh start
 RUN systemctl enable ssh
