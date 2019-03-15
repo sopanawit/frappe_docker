@@ -23,11 +23,15 @@ RUN apt-get install -y nano
 ENV LANG C.UTF-8
 
 #nodejs
-RUN apt-get install curl
-RUN curl https://deb.nodesource.com/node_6.x/pool/main/n/nodejs/nodejs_6.7.0-1nodesource1~xenial1_amd64.deb > node.deb \
+RUN curl https://deb.nodesource.com/node_10.x/pool/main/n/nodejs/nodejs_10.10.0-1nodesource1_amd64.deb > node.deb \
  && dpkg -i node.deb \
  && rm node.deb
-RUN apt-get install -y wkhtmltopdf
+
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+RUN tar vxf wkhtmltox-0.12.3_linux-generic-amd64.tar.xz
+RUN cp wkhtmltox/bin/wk* /usr/local/bin/
+
+RUN useradd -ms /bin/bash -G sudo frappe && printf '# User rules for frappe\nfrappe ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/frappe
 
 USER frappe
 WORKDIR /home/frappe
